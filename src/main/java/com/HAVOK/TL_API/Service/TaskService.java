@@ -17,7 +17,11 @@ public class TaskService {
         return this.tr.findAll();
     }
 
-    public Optional<Task> getById(Integer id){
+    public Optional<Task> getByTaskId(Integer id){
         return this.tr.findById(id);
+    }
+
+    public List<Task> getByUserId(Integer id){
+        return this.tr.getTaskByUserId(id);
     }
 }

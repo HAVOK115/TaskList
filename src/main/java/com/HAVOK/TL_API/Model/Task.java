@@ -12,7 +12,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer task_id;
     @Column
-    private int user_id;
+    private Integer user_id;
     @Column
     private String content;
 }

@@ -16,12 +16,14 @@ public class UserController {
 
     // User methods
     @GetMapping(path = "/get")
-    public List<User> get(){
-        return this.us.get();
-    }
+    public List<User> get(@RequestParam Integer id){
+        List<User> res = null;
 
-    @GetMapping(path = "/get/{id}")
-    public Optional<User> getById(@RequestParam(name = "id") Integer id){
-        return this.us.getById(id);
+        if(id != null){
+            res = this.us.getById(id).stream().toList();
+        }else{
+            res = this.us.get();
+        }
+        return res;
     }
 }

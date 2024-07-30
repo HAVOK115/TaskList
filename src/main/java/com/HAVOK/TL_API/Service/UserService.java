@@ -20,4 +20,12 @@ public class UserService {
     public Optional<User> getById(Integer id){
         return this.ur.findById(id);
     }
+
+    public List<User> getByUserName(String username){
+        return this.ur.getUsersByUserName(username);
+    }
+
+    public Optional<User> getByEmail(String mail){
+        return this.ur.getUserByEmail(mail);
+    }
 }

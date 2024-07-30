@@ -17,7 +17,7 @@ public class TaskController {
     /*
     * Method that gets the tasks by user id, task id or none of them
     *
-    * Returns all the tasks from the database table -> http://localhost:8080/API/v1/tasks/get
+    * Returns all the tasks -> http://localhost:8080/API/v1/tasks/get
     * Returns all the task from one user -> http://localhost:8080/API/v1/tasks/get?user_id={}
     * Returns a specific task -> http://localhost:8080/API/v1/tasks/get?task_id={}
     */

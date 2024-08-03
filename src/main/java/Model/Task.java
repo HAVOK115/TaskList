@@ -39,4 +39,11 @@ public class Task {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Task [task_id=" + task_id + ", user_id=" + user_id + ", content=" + content + "]";
+	}
+	
+	
 }

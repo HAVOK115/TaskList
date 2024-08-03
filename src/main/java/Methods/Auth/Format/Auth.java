@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import Controller.TaskController;
+
 public class Auth {
 	public static void formatFieldLabel(JLabel label) {
 		label.setForeground(new Color(255, 255, 255));
@@ -63,8 +65,7 @@ public class Auth {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 

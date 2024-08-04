@@ -24,4 +24,8 @@ public class TaskService {
     public List<Task> getByUserId(Integer id){
         return this.tr.getTaskByUserId(id);
     }
+
+    public void create(Task task){
+        this.tr.save(task);
+    }
 }

@@ -28,4 +28,8 @@ public class UserService {
     public Optional<User> getByEmail(String mail){
         return this.ur.getUserByEmail(mail);
     }
+
+    public void create(User user){
+        this.ur.save(user);
+    }
 }

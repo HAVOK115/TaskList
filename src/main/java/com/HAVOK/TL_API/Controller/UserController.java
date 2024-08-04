@@ -15,7 +15,7 @@ public class UserController {
     UserService us;
 
     /*
-     * Method that retrieves user information
+     * Methods that retrieves user information
      *
      * Returns all the users -> http://localhost:8080/API/v1/users/get
      * Returns all the task by their username -> http://localhost:8080/API/v1/tasks/get?user={}
@@ -39,5 +39,11 @@ public class UserController {
             res = this.us.get();
         }
         return res;
+    }
+
+    // Endpoint to create an user -> http://localhost:8080/API/v1/users/create
+    @PostMapping(path = "/create")
+    public void create(@RequestBody User u){
+        this.us.create(u);
     }
 }

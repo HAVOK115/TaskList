@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Controller.TaskController;
 import Methods.Auth.Format.Auth;
 
 public class loginPanel extends JPanel {

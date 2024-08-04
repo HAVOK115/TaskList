@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
 
@@ -51,14 +52,45 @@ public class UserController {
 
 			if (uList.size() == 1) {
 				return uList.get(0);
+			} else {
+				System.out.println(con.getErrorStream().toString());
 			}
 		}
 		return null;
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public void create(User u) throws Exception {
+		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/create");
+		con.setRequestMethod("POST");
+		con.setDoOutput(true);
+		con.setRequestProperty("Content-Type", "application/json");
 
+		String body = "{\"id\": " + u.getId() + ", \"username\": \"" + u.getUsername() + "\", \"mail\": \""
+				+ u.getMail() + "\", \"password\": \"" + u.getPassword() + "\"}";
+		DataOutputStream os = new DataOutputStream(con.getOutputStream());
+		os.writeBytes(body);
+		os.flush();
+		os.close();
+
+		int status = con.getResponseCode();
+
+		if (status == 200) {
+			System.out.println("New user created");
+		} else {
+			System.out.println(con.getErrorStream().toString());
+		}
 	}
 
+	public void delete(int id) throws Exception {
+		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/delete?id=" + id);
+		con.setRequestMethod("DELETE");
+
+		int status = con.getResponseCode();
+
+		if (status == 200) {
+			System.out.println("The user with the id [" + id + "] has been deleted");
+		} else {
+			System.out.println(con.getErrorStream().toString());
+		}
+	}
 }

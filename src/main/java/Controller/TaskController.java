@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class TaskController {
 		int status = con.getResponseCode();
 
 		if (status == 200) {
-			List<Task> tList = tcm.getEndpointResponse(con);
+			List<Task> tList = tcm.getResponseData(con);
 			System.out.println(tList);
 			return tList;
 		} else {
@@ -32,7 +33,7 @@ public class TaskController {
 		int status = con.getResponseCode();
 
 		if (status == 200) {
-			List<Task> tList = tcm.getEndpointResponse(con);
+			List<Task> tList = tcm.getResponseData(con);
 			System.out.println(tList);
 			return tList;
 		} else {
@@ -48,7 +49,7 @@ public class TaskController {
 		int status = con.getResponseCode();
 
 		if (status == 200) {
-			List<Task> tList = tcm.getEndpointResponse(con);
+			List<Task> tList = tcm.getResponseData(con);
 			if (tList.size() == 1) {
 				System.out.println(tList.get(0));
 				return tList.get(0);
@@ -57,5 +58,53 @@ public class TaskController {
 			}
 		}
 		return null;
+	}
+
+	public void create(Task t) throws Exception {
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/create");
+		con.setRequestMethod("POST");
+		con.setDoOutput(true);
+		con.setRequestProperty("Content-Type", "application/json");
+
+		String body = "{\"task_id\": " + t.getTask_id() + ", \"user_id\": " + t.getUser_id() + ", \"content\": \""
+				+ t.getContent() + "\"}";
+		DataOutputStream os = new DataOutputStream(con.getOutputStream());
+		os.writeBytes(body);
+		os.flush();
+		os.close();
+
+		int status = con.getResponseCode();
+
+		if (status == 200) {
+			System.out.println(body);
+		} else {
+			System.out.println(con.getErrorStream().toString());
+		}
+	}
+
+	public void deleteByTaskId(int id) throws Exception {
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?task_id=" + id);
+		con.setRequestMethod("DELETE");
+
+		int status = con.getResponseCode();
+
+		if (status == 200) {
+			System.out.println("Task with the task id[" + id + "] has been deleted");
+		} else {
+			System.out.println(con.getErrorStream().toString());
+		}
+	}
+
+	public void deleteByUserId(int id) throws Exception {
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?user_id=" + id);
+		con.setRequestMethod("DELETE");
+
+		int status = con.getResponseCode();
+
+		if (status == 200) {
+			System.out.println("All tasks with the user id[" + id + "] has been deleted");
+		} else {
+			System.out.println(con.getErrorStream().toString());
+		}
 	}
 }

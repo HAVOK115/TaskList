@@ -1,7 +1,9 @@
 package Methods.Controller.Task;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import Model.Task;
 
 public class TaskControllerMethods {
-	public List<Task> getEndpointResponse(HttpURLConnection con) throws Exception {
+	public List<Task> getResponseData(HttpURLConnection con) throws Exception {
 		String line = "";
 		StringBuffer content = new StringBuffer();
 
@@ -28,8 +30,11 @@ public class TaskControllerMethods {
 		List<Task> taskList = stringToJSON(content.toString());
 		return taskList;
 	}
-
-	// http://localhost:8080/API/v1/tasks/get
+	
+	public void createTask(HttpURLConnection con) throws IOException {
+		
+	}
+	
 	public HttpURLConnection fetchApi(String endpoint) throws Exception {
 		URL url = new URL(endpoint);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();

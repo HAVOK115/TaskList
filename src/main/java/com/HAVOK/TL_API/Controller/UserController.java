@@ -46,4 +46,10 @@ public class UserController {
     public void create(@RequestBody User u){
         this.us.create(u);
     }
+
+    // Endpoint to delete an user -> http://localhost:8080/API/v1/users/delete
+    @DeleteMapping(path = "/delete")
+    public void delete(@RequestParam(required = true, name = "id") Integer id){
+        this.us.delete(id);
+    }
 }

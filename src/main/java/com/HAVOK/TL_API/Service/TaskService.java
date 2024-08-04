@@ -28,4 +28,12 @@ public class TaskService {
     public void create(Task task){
         this.tr.save(task);
     }
+
+    public void deleteByTaskId(Integer id){
+        this.tr.deleteById(id);
+    }
+
+    public void deleteByUserId(Integer id){
+        this.tr.deleteByUserId(id);
+    }
 }

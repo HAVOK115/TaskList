@@ -15,11 +15,11 @@ public class TaskController {
     TaskService ts;
 
     /*
-    * Endpoints that gets the tasks by user id, task id or none of them
+    * Endpoints to get the tasks by user id, task id or none of them
     *
-    * Returns all the tasks -> http://localhost:8080/API/v1/tasks/get
-    * Returns all the task from one user -> http://localhost:8080/API/v1/tasks/get?user_id={}
-    * Returns a specific task -> http://localhost:8080/API/v1/tasks/get?task_id={}
+    * Base endpoint -> http://localhost:8080/API/v1/tasks/get
+    * User id parameter -> user_id=
+    * Task id parameter -> task_id=
     */
 
     @GetMapping(path = "/get")
@@ -41,5 +41,22 @@ public class TaskController {
     @PostMapping(path = "/create")
     public void create(@RequestBody Task t){
         this.ts.create(t);
+    }
+
+    /*
+     * Endpoints to delete a task by user id or task id
+     *
+     * Base endpoint -> http://localhost:8080/API/v1/tasks/delete
+     * Task id parameter -> task_id=
+     * User id parameter -> user_id=
+     */
+    @DeleteMapping(path = "/delete")
+    public void delete(@RequestParam(required = false, name = "task_id") Integer task,
+                       @RequestParam(required = false, name = "user_id") Integer user){
+        if(task != null){
+            this.ts.deleteByTaskId(task);
+        }else if(user != null){
+            this.ts.deleteByUserId(user);
+        }
     }
 }

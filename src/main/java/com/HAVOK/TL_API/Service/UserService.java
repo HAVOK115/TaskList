@@ -32,4 +32,8 @@ public class UserService {
     public void create(User user){
         this.ur.save(user);
     }
+
+    public void delete(Integer id){
+        this.ur.deleteById(id);
+    }
 }

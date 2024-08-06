@@ -1,12 +1,11 @@
 package View.Panels.Auth;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,8 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Controller.TaskController;
+import Controller.UserController;
 import Methods.Auth.Format.Auth;
+import Model.User;
 
 public class loginPanel extends JPanel {
 	private JLabel loginLabel;
@@ -90,7 +90,7 @@ public class loginPanel extends JPanel {
 		toggleCheckPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		toggleCheckPassword.setBackground(new Color(51, 51, 51));
 		toggleCheckPassword.setForeground(new Color(255, 255, 255));
-		toggleCheckPassword.setBounds(420, 410, 291, 23);
+		toggleCheckPassword.setBounds(420, 410, 127, 23);
 		add(toggleCheckPassword);
 
 		toggleCheckPassword.addActionListener(new ActionListener() {
@@ -120,6 +120,23 @@ public class loginPanel extends JPanel {
 
 		// MouseListeners
 		Auth.setMouseActions(submitButton, toggleCheckPassword);
+		submitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UserController uc = new UserController();
+				try {
+					User u = uc.getByEmail(emailField.getText());
+					
+					if(passwordField.getText().equals(u.getPassword()) && repeatPasswordField.getText().equals(passwordField.getText())) {
+						System.out.println("LOGIN SUCCESSFULLY DONE");
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+ 			}
+		});
 
 		// Panel settings
 		setLayout(null);

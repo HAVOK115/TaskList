@@ -83,7 +83,7 @@ public class TaskController {
 	}
 
 	public void deleteByTaskId(int id) throws Exception {
-		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?task_id=" + id);
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?taskId=" + id);
 		con.setRequestMethod("DELETE");
 
 		int status = con.getResponseCode();
@@ -96,7 +96,7 @@ public class TaskController {
 	}
 
 	public void deleteByUserId(int id) throws Exception {
-		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?user_id=" + id);
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?userId=" + id);
 		con.setRequestMethod("DELETE");
 
 		int status = con.getResponseCode();

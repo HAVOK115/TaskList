@@ -18,45 +18,62 @@ public class UserController {
 
 		if (status == 200) {
 			List<User> uList = ucm.getEndpointResponse(con);
+			System.out.println(uList.toString());
 			return uList;
 		} else {
 			System.out.println(con.getErrorStream().toString());
 			return null;
 		}
-	}
-
-	public List<User> getByTaskId(int id) throws Exception {
-		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/get?task_id=" + id);
-		con.setRequestMethod("GET");
-
-		int status = con.getResponseCode();
-
-		if (status == 200) {
-			List<User> uList = ucm.getEndpointResponse(con);
-			return uList;
-		} else {
-			System.out.println(con.getErrorStream().toString());
-			return null;
-		}
-
 	}
 
 	public User getByUserId(int id) throws Exception {
-		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/get?user_id=" + id);
+		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/get?userId=" + id);
 		con.setRequestMethod("GET");
 
 		int status = con.getResponseCode();
 
 		if (status == 200) {
-			List<User> uList = ucm.getEndpointResponse(con);
+			List<User> list = ucm.getEndpointResponse(con);
 
-			if (uList.size() == 1) {
-				return uList.get(0);
+			if (list.size() == 1) {
+				System.out.println(list.get(0).toString());
+				return list.get(0);
 			} else {
 				System.out.println(con.getErrorStream().toString());
 			}
 		}
 		return null;
+	}
+	
+	public User getByUserName(String username) throws Exception{
+		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/get?username=" + username);
+		con.setRequestMethod("GET");
+		
+		int status = con.getResponseCode();
+		
+		if(status == 200) {
+			List<User> list = ucm.getEndpointResponse(con);
+			System.out.println(list.get(0).toString());
+			return list.get(0);
+		}else {
+			System.out.println(con.getErrorStream().toString());
+			return null;
+		}
+	}
+	
+	public User getByEmail(String email) throws Exception {
+		HttpURLConnection con = ucm.fetchApi("http://localhost:8080/API/v1/users/get?userEmail=" + email);
+		con.setRequestMethod("GET");
+		
+		int status = con.getResponseCode();
+		
+		if(status == 200) {
+			List<User> list = ucm.getEndpointResponse(con);
+			return list.get(0);
+		}else {
+			System.out.println(con.getErrorStream().toString());
+			return null;
+		}
 	}
 
 	public void create(User u) throws Exception {

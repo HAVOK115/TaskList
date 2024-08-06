@@ -16,7 +16,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Controller.UserController;
 import Methods.Auth.Format.Auth;
+import Model.User;
+
 import javax.swing.JCheckBox;
 
 public class signupPanel extends JPanel {
@@ -93,7 +96,7 @@ public class signupPanel extends JPanel {
 		toggleCheckPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		toggleCheckPassword.setBackground(new Color(51, 51, 51));
 		toggleCheckPassword.setForeground(new Color(255, 255, 255));
-		toggleCheckPassword.setBounds(420, 410, 291, 23);
+		toggleCheckPassword.setBounds(420, 410, 127, 23);
 		add(toggleCheckPassword);
 
 		toggleCheckPassword.addActionListener(new ActionListener() {
@@ -109,6 +112,15 @@ public class signupPanel extends JPanel {
 				}
 			}
 		});
+		
+		// User creation alert
+		JLabel alertLabel = new JLabel("*New user successfully created*");
+		alertLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		alertLabel.setForeground(new Color(255, 0, 0));
+		alertLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		alertLabel.setBounds(423, 550, 291, 25);
+		alertLabel.setVisible(false);
+		add(alertLabel);
 
 		// Submit button settings
 		submitButton = new JButton("Submit");
@@ -121,6 +133,25 @@ public class signupPanel extends JPanel {
 
 		// MouseListeners
 		Auth.setMouseActions(submitButton, toggleCheckPassword);
+		
+		submitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UserController uc = new UserController();
+				
+				if(!usernameField.getText().isEmpty() && !emailField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+					User u = new User(null, usernameField.getText(), emailField.getText(), passwordField.getText());
+					try {
+						uc.create(u);
+						alertLabel.setVisible(true);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 
 		// Panel settings
 		setLayout(null);

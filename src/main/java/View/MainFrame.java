@@ -24,12 +24,12 @@ import javax.swing.border.EmptyBorder;
 import View.Panels.Auth.loginPanel;
 import View.Panels.Auth.signupPanel;
 
-public class Main extends JFrame {
+public class MainFrame extends JFrame {
 	private JPanel mainPanel;
 	private signupPanel signup;
 	private loginPanel login;
 
-	public Main() {
+	public MainFrame() {
 		// Window width and height will be the 60% of the screen size
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) (size.getWidth() * 60) / 100;
@@ -145,6 +145,6 @@ public class Main extends JFrame {
 			e1.printStackTrace();
 		}
 
-		Main m = new Main();
+		MainFrame mf = new MainFrame();
 	}
 }

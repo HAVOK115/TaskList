@@ -5,9 +5,9 @@ import com.HAVOK.TL_API.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/API/v1/tasks")
 public class TaskController {
@@ -15,31 +15,30 @@ public class TaskController {
     TaskService ts;
 
     /*
-    * Endpoints to get the tasks by user id, task id or none of them
-    *
-    * Base endpoint -> http://localhost:8080/API/v1/tasks/get
-    * User id parameter -> user_id=
-    * Task id parameter -> task_id=
-    */
+     * Endpoints to get the tasks by user id, task id or none of them
+     *
+     * Base endpoint -> http://localhost:8080/API/v1/tasks/get
+     * User id parameter -> userId=
+     * Task id parameter -> taskId=
+     */
 
     @GetMapping(path = "/get")
-    public List<Task> get(@RequestParam(required = false) Integer task_id, @RequestParam(required = false) Integer user_id){
-        List<Task> res = null;
+    public List<Task> get(@RequestParam(required = false, name = "taskId") Integer taskId,
+                          @RequestParam(required = false, name = "userId") Integer userId) {
 
-        if(task_id != null){
-            Optional<Task> val = this.ts.getByTaskId(task_id);
-            res = val.stream().toList();
-        }else if(user_id != null){
-            res = this.ts.getByUserId(user_id);
-        }else{
-            res = this.ts.get();
+        if (taskId != null) {
+            Optional<Task> val = this.ts.getByTaskId(taskId);
+            return val.stream().toList();
+        } else if (userId != null) {
+            return this.ts.getByUserId(userId);
+        } else {
+            return this.ts.get();
         }
-        return res;
     }
 
     // Endpoint to create a task -> http://localhost:8080/API/v1/tasks/create
     @PostMapping(path = "/create")
-    public void create(@RequestBody Task t){
+    public void create(@RequestBody Task t) {
         this.ts.create(t);
     }
 
@@ -47,16 +46,16 @@ public class TaskController {
      * Endpoints to delete a task by user id or task id
      *
      * Base endpoint -> http://localhost:8080/API/v1/tasks/delete
-     * Task id parameter -> task_id=
-     * User id parameter -> user_id=
+     * Task id parameter -> taskId=
+     * User id parameter -> userId=
      */
     @DeleteMapping(path = "/delete")
-    public void delete(@RequestParam(required = false, name = "task_id") Integer task,
-                       @RequestParam(required = false, name = "user_id") Integer user){
-        if(task != null){
-            this.ts.deleteByTaskId(task);
-        }else if(user != null){
-            this.ts.deleteByUserId(user);
+    public void delete(@RequestParam(required = false, name = "taskId") Integer taskId,
+                       @RequestParam(required = false, name = "userId") Integer userId) {
+        if (taskId != null) {
+            this.ts.deleteByTaskId(taskId);
+        } else if (userId != null) {
+            this.ts.deleteByUserId(userId);
         }
     }
 }

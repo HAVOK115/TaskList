@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -31,6 +29,9 @@ public class loginPanel extends JPanel {
 	private JCheckBox toggleCheckPassword;
 	public JLabel toggleLabel;
 	private JButton submitButton;
+	
+	private boolean isLogged;
+	private User u;
 
 	public loginPanel() {
 		// Sign up label settings
@@ -126,16 +127,15 @@ public class loginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				UserController uc = new UserController();
 				try {
-					User u = uc.getByEmail(emailField.getText());
-					
+					u = uc.getByEmail(emailField.getText());
 					if(passwordField.getText().equals(u.getPassword()) && repeatPasswordField.getText().equals(passwordField.getText())) {
-						System.out.println("LOGIN SUCCESSFULLY DONE");
+						isLogged = true;
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
- 			}
+			}
 		});
 
 		// Panel settings
@@ -149,5 +149,17 @@ public class loginPanel extends JPanel {
 		passwordField.setText(null);
 		repeatPasswordField.setText(null);
 		toggleCheckPassword.setSelected(false);
+	}
+	
+	public User getLoggedUser() {
+		return u;
+	}
+
+	public boolean isLogged() {
+		return isLogged;
+	}
+
+	public void setLogged(boolean isLogged) {
+		this.isLogged = isLogged;
 	}
 }

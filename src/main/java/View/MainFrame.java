@@ -1,33 +1,28 @@
 package View;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.EmptyBorder;
 
+import Model.User;
 import View.Panels.Auth.loginPanel;
 import View.Panels.Auth.signupPanel;
+import View.Panels.User.UserPanel;
 
 public class MainFrame extends JFrame {
 	private JPanel mainPanel;
 	private signupPanel signup;
 	private loginPanel login;
+	private UserPanel userPanel;
+	private Thread checkIsLogged;
 
 	public MainFrame() {
 		// Window width and height will be the 60% of the screen size
@@ -45,7 +40,9 @@ public class MainFrame extends JFrame {
 
 		mainPanel.add(signup, "SIGN_UP");
 		mainPanel.add(login, "LOG_IN");
-		cl.first(mainPanel);
+		
+		// Shows the signup panel first
+		cl.show(mainPanel, "SIGN_UP");
 
 		signup.toggleLabel.addMouseListener(new MouseListener() {
 			String signupToggleText = signup.toggleLabel.getText();
@@ -60,6 +57,7 @@ public class MainFrame extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				cl.last(mainPanel);
 				signup.clearFieldContent();
+				signup.alertLabel.setVisible(false);
 			}
 
 			@Override
@@ -77,8 +75,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -93,7 +90,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				cl.first(mainPanel);
+				cl.show(mainPanel, "SIGN_UP");
 				login.clearFieldContent();
 			}
 
@@ -116,7 +113,33 @@ public class MainFrame extends JFrame {
 
 			}
 		});
-
+		
+		checkIsLogged = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true) {
+					if(login.isLogged() == true) {
+						User u = login.getLoggedUser();;
+						userPanel = new UserPanel(u);
+						mainPanel.add(userPanel, "USER_PANEL");
+						cl.show(mainPanel, "USER_PANEL");
+						System.out.println("USER LOGGED");
+						break;
+					}
+					
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						break;
+					}
+				}	
+			}
+		});
+		checkIsLogged.start();
+		
 		// Window settings
 		setContentPane(mainPanel);
 		setTitle("TaskList");

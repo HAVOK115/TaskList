@@ -36,6 +36,7 @@ public class signupPanel extends JPanel {
 	private JPasswordField passwordField;
 	private JCheckBox toggleCheckPassword;
 	public JLabel toggleLabel;
+	public JLabel alertLabel;
 	private JButton submitButton;
 
 	public signupPanel() {
@@ -86,12 +87,14 @@ public class signupPanel extends JPanel {
 		passwordField.setBounds(423, 360, 291, 30);
 		add(passwordField);
 
+		// Label to toggle between the sign up and the login panels
 		toggleLabel = new JLabel("If you already have an account, you can log in");
 		toggleLabel.setForeground(new Color(255, 255, 255));
 		toggleLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		toggleLabel.setBounds(423, 443, 291, 20);
 		add(toggleLabel);
 
+		// Checkbox that reveals the password when ticked
 		toggleCheckPassword = new JCheckBox("Reveal password");
 		toggleCheckPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		toggleCheckPassword.setBackground(new Color(51, 51, 51));
@@ -114,7 +117,7 @@ public class signupPanel extends JPanel {
 		});
 		
 		// User creation alert
-		JLabel alertLabel = new JLabel("*New user successfully created*");
+		alertLabel = new JLabel("*New user successfully created*");
 		alertLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		alertLabel.setForeground(new Color(255, 0, 0));
 		alertLabel.setFont(new Font("Tahoma", Font.BOLD, 12));

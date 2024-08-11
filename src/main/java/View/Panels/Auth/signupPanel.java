@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import Controller.UserController;
 import Methods.Auth.Format.Auth;
 import Model.User;
@@ -34,7 +36,6 @@ public class signupPanel extends JPanel {
 	private JTextField emailField;
 	private JLabel passwordLabel;
 	private JPasswordField passwordField;
-	private JCheckBox toggleCheckPassword;
 	public JLabel toggleLabel;
 	public JLabel alertLabel;
 	private JButton submitButton;
@@ -91,30 +92,8 @@ public class signupPanel extends JPanel {
 		toggleLabel = new JLabel("If you already have an account, you can log in");
 		toggleLabel.setForeground(new Color(255, 255, 255));
 		toggleLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		toggleLabel.setBounds(423, 443, 291, 20);
+		toggleLabel.setBounds(423, 420, 291, 20);
 		add(toggleLabel);
-
-		// Checkbox that reveals the password when ticked
-		toggleCheckPassword = new JCheckBox("Reveal password");
-		toggleCheckPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		toggleCheckPassword.setBackground(new Color(51, 51, 51));
-		toggleCheckPassword.setForeground(new Color(255, 255, 255));
-		toggleCheckPassword.setBounds(420, 410, 127, 23);
-		add(toggleCheckPassword);
-
-		toggleCheckPassword.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JCheckBox c = (JCheckBox) e.getSource();
-
-				if (c.isSelected()) {
-					passwordField.setEchoChar((char) 0);
-				} else {
-					passwordField.setEchoChar('●');
-				}
-			}
-		});
 		
 		// User creation alert
 		alertLabel = new JLabel("*New user successfully created*");
@@ -127,15 +106,11 @@ public class signupPanel extends JPanel {
 
 		// Submit button settings
 		submitButton = new JButton("Submit");
-		submitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		submitButton.setForeground(new Color(255, 255, 255));
-		submitButton.setBackground(new Color(0, 0, 255));
 		submitButton.setBounds(423, 480, 291, 45);
-		submitButton.setBorderPainted(false);
 		add(submitButton);
 
 		// MouseListeners
-		Auth.setMouseActions(submitButton, toggleCheckPassword);
+		Auth.setMouseActions(submitButton);
 		
 		submitButton.addActionListener(new ActionListener() {
 			
@@ -158,7 +133,6 @@ public class signupPanel extends JPanel {
 
 		// Panel settings
 		setLayout(null);
-		setBackground(new Color(51, 51, 51));
 		setBorder(new EmptyBorder(40, 40, 40, 40));
 	}
 
@@ -166,6 +140,5 @@ public class signupPanel extends JPanel {
 		usernameField.setText(null);
 		emailField.setText(null);
 		passwordField.setText(null);
-		toggleCheckPassword.setSelected(false);
 	}
 }

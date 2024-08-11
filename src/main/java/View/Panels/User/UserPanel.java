@@ -22,7 +22,6 @@ public class UserPanel extends JPanel{
 		// Greeting label
 		JLabel greetingLabel = new JLabel("Welcome, " + usr.getUsername() + "!");
 		greetingLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		greetingLabel.setForeground(new Color(255, 255, 255));
 		greetingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(greetingLabel, BorderLayout.CENTER);
 	}

@@ -14,8 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import Controller.TaskController;
-
 public class Auth {
 	public static void formatFieldLabel(JLabel label) {
 		label.setForeground(new Color(255, 255, 255));
@@ -23,26 +21,16 @@ public class Auth {
 	}
 
 	public static void formatField(JTextField field) {
-		field.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		field.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		field.setMargin(new Insets(5, 5, 5, 5));
 		field.setColumns(10);
-		field.setBackground(new Color(34, 34, 34));
-		field.setForeground(Color.WHITE);
-		field.setCaretColor(Color.GRAY);
 	}
 
 	public static void formatField(JPasswordField field) {
-		field.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		field.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		field.setMargin(new Insets(5, 5, 5, 5));
 		field.setColumns(10);
-		field.setBackground(new Color(34, 34, 34));
-		field.setForeground(Color.WHITE);
-		field.setCaretColor(Color.GRAY);
 	}
 
-	public static void setMouseActions(JButton btn, JCheckBox pwdCheck) {
+	public static void setMouseActions(JButton btn) {
 		btn.addMouseListener(new MouseListener() {
 
 			@Override
@@ -53,13 +41,11 @@ public class Auth {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btn.setBackground(new Color(0, 0, 255));
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btn.setBackground(new Color(0, 0, 160));
 				btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 			}
@@ -73,39 +59,6 @@ public class Auth {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
-			}
-		});
-
-		pwdCheck.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				pwdCheck.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 	}

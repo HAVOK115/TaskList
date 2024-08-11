@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import Controller.UserController;
 import Methods.Auth.Format.Auth;
 import Model.User;
@@ -26,7 +28,6 @@ public class loginPanel extends JPanel {
 	private JPasswordField passwordField;
 	private JLabel repeatPasswordLabel;
 	private JPasswordField repeatPasswordField;
-	private JCheckBox toggleCheckPassword;
 	public JLabel toggleLabel;
 	private JButton submitButton;
 	
@@ -55,26 +56,26 @@ public class loginPanel extends JPanel {
 		emailField.setBounds(423, 207, 291, 30);
 		add(emailField);
 
-		// Mail label settings
+		// Password label settings
 		passwordLabel = new JLabel("Password");
 		Auth.formatFieldLabel(passwordLabel);
 		passwordLabel.setBounds(423, 258, 291, 14);
 		add(passwordLabel);
 
-		// Mail field settings
+		// Password field settings
 		passwordField = new JPasswordField();
 		passwordLabel.setLabelFor(passwordField);
 		Auth.formatField(passwordField);
 		passwordField.setBounds(423, 283, 291, 30);
 		add(passwordField);
 
-		// Password label settings
+		// Repeat Password label settings
 		repeatPasswordLabel = new JLabel("Repeat password");
 		Auth.formatFieldLabel(repeatPasswordLabel);
 		repeatPasswordLabel.setBounds(423, 334, 291, 14);
 		add(repeatPasswordLabel);
 
-		// Password field settings
+		// Repeat Password field settings
 		repeatPasswordField = new JPasswordField();
 		repeatPasswordLabel.setLabelFor(repeatPasswordField);
 		Auth.formatField(repeatPasswordField);
@@ -84,43 +85,16 @@ public class loginPanel extends JPanel {
 		toggleLabel = new JLabel("If you don't have an account yet, you can sign up");
 		toggleLabel.setForeground(new Color(255, 255, 255));
 		toggleLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		toggleLabel.setBounds(423, 443, 320, 20);
+		toggleLabel.setBounds(423, 420, 320, 20);
 		add(toggleLabel);
-
-		toggleCheckPassword = new JCheckBox("Reveal password");
-		toggleCheckPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		toggleCheckPassword.setBackground(new Color(51, 51, 51));
-		toggleCheckPassword.setForeground(new Color(255, 255, 255));
-		toggleCheckPassword.setBounds(420, 410, 127, 23);
-		add(toggleCheckPassword);
-
-		toggleCheckPassword.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JCheckBox c = (JCheckBox) e.getSource();
-
-				if (c.isSelected()) {
-					passwordField.setEchoChar((char) 0);
-					repeatPasswordField.setEchoChar((char) 0);
-				} else {
-					passwordField.setEchoChar('●');
-					repeatPasswordField.setEchoChar('●');
-				}
-			}
-		});
 
 		// Submit button settings
 		submitButton = new JButton("Submit");
-		submitButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		submitButton.setForeground(new Color(255, 255, 255));
-		submitButton.setBackground(new Color(0, 0, 255));
 		submitButton.setBounds(423, 480, 291, 45);
-		submitButton.setBorderPainted(false);
 		add(submitButton);
 
 		// MouseListeners
-		Auth.setMouseActions(submitButton, toggleCheckPassword);
+		Auth.setMouseActions(submitButton);
 		submitButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -140,7 +114,6 @@ public class loginPanel extends JPanel {
 
 		// Panel settings
 		setLayout(null);
-		setBackground(new Color(51, 51, 51));
 		setBorder(new EmptyBorder(40, 40, 40, 40));
 	}
 
@@ -148,7 +121,6 @@ public class loginPanel extends JPanel {
 		emailField.setText(null);
 		passwordField.setText(null);
 		repeatPasswordField.setText(null);
-		toggleCheckPassword.setSelected(false);
 	}
 	
 	public User getLoggedUser() {

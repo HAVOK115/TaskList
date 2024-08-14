@@ -1,28 +1,59 @@
 package View.Panels.User;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 
+import Controller.TaskController;
+import Model.Task;
 import Model.User;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
-public class UserPanel extends JPanel{
+public class UserPanel extends JPanel {
+	private TaskController tc = new TaskController();
+	private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
 	public UserPanel(User usr) {
+		try {
+			List<Task> taskList = tc.getByUserId(usr.getId());
+			String[] taskListContent = new String[taskList.size()];
+			
+			for(int i = 0; i < taskList.size(); i++) {
+				taskListContent[i] = taskList.get(i).getContent().toString();
+			}
+			
+			// Panel settings
+			setLayout(null);
+			setBackground(new Color(51, 51, 51));
+
+			// Scroll pane
+			JScrollPane scroll = new JScrollPane();
+			scroll.setBounds(((int) size.getWidth() * 17) / 100, ((int) size.getHeight() * 15) / 100, 500, 300);
+			add(scroll);
+
+			// Task list pane
+			JList<String> list = new JList<String>(taskListContent);
+			scroll.add(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String[] getTaskListContent(List<Task> tl) {
+		List<String> taskContentList = new ArrayList<String>();
 		
-		// Panel settings
-		setLayout(new BorderLayout());
-		setBackground(new Color(51, 51, 51));
-		setBorder(new EmptyBorder(40, 40, 40, 40));
+		for(Task t : tl) {
+			taskContentList.add(t.getContent().toString());
+		}
 		
-		// Greeting label
-		JLabel greetingLabel = new JLabel("Welcome, " + usr.getUsername() + "!");
-		greetingLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		greetingLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		add(greetingLabel, BorderLayout.CENTER);
+		return (String[]) taskContentList.toArray();
 	}
 }

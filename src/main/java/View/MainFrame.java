@@ -23,6 +23,7 @@ public class MainFrame extends JFrame {
 	private loginPanel login;
 	private UserPanel userPanel;
 	private Thread checkIsLogged;
+	private Thread checkIsLoggedOut;
 
 	public MainFrame() {
 		// Window width and height will be the 60% of the screen size
@@ -40,7 +41,7 @@ public class MainFrame extends JFrame {
 
 		mainPanel.add(signup, "SIGN_UP");
 		mainPanel.add(login, "LOG_IN");
-		
+
 		// Shows the signup panel first
 		cl.show(mainPanel, "SIGN_UP");
 
@@ -55,7 +56,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				cl.last(mainPanel);
+				cl.show(mainPanel, "LOG_IN");
 				signup.clearFieldContent();
 				signup.alertLabel.setVisible(false);
 			}
@@ -75,7 +76,7 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 			}
 		});
 
@@ -113,33 +114,55 @@ public class MainFrame extends JFrame {
 
 			}
 		});
-		
+
+		// Thread that checks if the user had sucessfully log in
 		checkIsLogged = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				while(true) {
-					if(login.isLogged() == true) {
-						User u = login.getLoggedUser();;
+				while (true) {
+					if (login.isLogged() == true) {
+						User u = login.getLoggedUser();
 						userPanel = new UserPanel(u);
 						mainPanel.add(userPanel, "USER_PANEL");
 						cl.show(mainPanel, "USER_PANEL");
 						System.out.println("USER LOGGED");
-						break;
+						login.setLogged(false);
 					}
-					
+
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						break;
 					}
-				}	
+				}
 			}
 		});
 		checkIsLogged.start();
-		
+
+		// Thread that checks if the user is logging out
+		checkIsLoggedOut = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					if (userPanel != null && userPanel.isLoggedOut()) {
+						cl.show(mainPanel, "SIGN_UP");
+						System.out.println("LOGGED OUT");
+						userPanel.setLoggedOut(false);
+					}
+
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		checkIsLoggedOut.start();
+
 		// Window settings
 		setContentPane(mainPanel);
 		setTitle("TaskList");

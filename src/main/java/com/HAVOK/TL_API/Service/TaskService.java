@@ -36,4 +36,10 @@ public class TaskService {
     public void deleteByUserId(Integer id){
         this.tr.deleteByUserId(id);
     }
+
+    public void deleteMany(List<Task> list){
+        for(Task t : list){
+            this.tr.deleteById(t.getTask_id());
+        }
+    }
 }

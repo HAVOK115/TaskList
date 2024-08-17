@@ -2,6 +2,10 @@ package com.HAVOK.TL_API.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CurrentTimestamp;
+
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user")

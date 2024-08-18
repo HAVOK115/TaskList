@@ -151,6 +151,7 @@ public class MainFrame extends JFrame {
 						cl.show(mainPanel, "SIGN_UP");
 						System.out.println("LOGGED OUT");
 						userPanel.setLoggedOut(false);
+						login.clearFieldContent();
 					}
 
 					try {

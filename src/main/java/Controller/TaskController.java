@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import Methods.Controller.Task.TaskControllerMethods;
 import Model.Task;
 
@@ -27,7 +29,7 @@ public class TaskController {
 	}
 
 	public List<Task> getByUserId(int id) throws Exception {
-		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/get?user_id=" + id);
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/get?userId=" + id);
 		con.setRequestMethod("GET");
 
 		int status = con.getResponseCode();
@@ -43,7 +45,7 @@ public class TaskController {
 	}
 
 	public Task getByTaskId(int id) throws Exception {
-		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/get?task_id=" + id);
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/get?taskId=" + id);
 		con.setRequestMethod("GET");
 
 		int status = con.getResponseCode();
@@ -54,7 +56,11 @@ public class TaskController {
 				System.out.println(tList.get(0));
 				return tList.get(0);
 			} else {
-				System.out.println(con.getErrorStream().toString());
+				if(con.getErrorStream() != null) {
+					System.out.println(con.getErrorStream().toString());
+				}else {
+					System.out.println("ERROR");
+				}
 			}
 		}
 		return null;
@@ -105,6 +111,19 @@ public class TaskController {
 			System.out.println("All tasks with the user id[" + id + "] has been deleted");
 		} else {
 			System.out.println(con.getErrorStream().toString());
+		}
+	}
+	
+	public void deleteMany(List<Task> list) throws Exception{
+		HttpURLConnection con = tcm.fetchApi("http://localhost:8080/API/v1/tasks/delete?list=" + list);
+		con.setRequestMethod("DELETE");
+		
+		int status = con.getResponseCode();
+		
+		if(status == 200) {
+			System.out.println("SELECTED TASKS DELETED");
+		}else {
+			con.getErrorStream().toString();
 		}
 	}
 }

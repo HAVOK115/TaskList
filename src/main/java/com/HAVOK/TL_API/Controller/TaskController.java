@@ -51,14 +51,11 @@ public class TaskController {
      */
     @DeleteMapping(path = "/delete")
     public void delete(@RequestParam(required = false, name = "taskId") Integer taskId,
-                       @RequestParam(required = false, name = "userId") Integer userId,
-                       @RequestParam(required = false, name = "list") List<Task> list) {
+                       @RequestParam(required = false, name = "userId") Integer userId) {
         if (taskId != null) {
             this.ts.deleteByTaskId(taskId);
         } else if (userId != null) {
             this.ts.deleteByUserId(userId);
-        }else if(list != null){
-            this.ts.deleteMany(list);
         }
     }
 }
